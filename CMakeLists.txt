@@ -415,13 +415,13 @@ if (BUILD_STATIC_VERSION)
     $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}>
     $<INSTALL_INTERFACE:include>
   )
-  target_link_libraries(${STATIC_ZIPPER_LIBRARY} ${ZLIB_LIBRARIES} ${EXTRA_LIBS})
+  target_link_libraries(${STATIC_ZIPPER_LIBRARY} ZLIB::ZLIB ${EXTRA_LIBS})
   list(APPEND TARGET_LIST ${STATIC_ZIPPER_LIBRARY})
 
   # Deprecated code: old zipper static lib was named libZipper-static.a but this was not
   # a good unix name. Anyway keep installing it to avoid breaking programs link with it.
   add_library (${ZIPPER_LIBRARY}-static STATIC ${ZIPPER_SOURCES} ${MINIZIP_SOURCES})
-  target_link_libraries(${ZIPPER_LIBRARY}-static ${ZLIB_LIBRARIES} ${EXTRA_LIBS})
+  target_link_libraries(${ZIPPER_LIBRARY}-static ZLIB::ZLIB ${EXTRA_LIBS})
   list(APPEND TARGET_LIST ${ZIPPER_LIBRARY}-static)
 endif()
 
@@ -446,7 +446,7 @@ if (BUILD_TEST)
   include(CTest)
 
   add_executable(${ZIPPER_LIBRARY}-test ${TEST_SOURCES})
-  target_link_libraries(${ZIPPER_LIBRARY}-test  static${ZIPPER_LIBRARY} ${ZLIB_LIBRARIES} ${EXTRA_LIBS})
+  target_link_libraries(${ZIPPER_LIBRARY}-test  static${ZIPPER_LIBRARY} ZLIB::ZLIB ${EXTRA_LIBS})
   list(APPEND TARGET_LIST ${ZIPPER_LIBRARY}-test)
 
   add_test(
